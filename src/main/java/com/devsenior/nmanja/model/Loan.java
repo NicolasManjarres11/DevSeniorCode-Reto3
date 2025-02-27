@@ -1,4 +1,4 @@
-package com.devsenior.nmanja;
+package com.devsenior.nmanja.model;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ public class Loan {
         this.loanDate = new Date();
     }
 
-    
+
 
     
 

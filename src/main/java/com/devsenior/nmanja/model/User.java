@@ -1,16 +1,16 @@
-package com.devsenior.nmanja;
+package com.devsenior.nmanja.model;
 
 public class User {
 
-    private int id;
+    private String id;
     private String name;
 
-    public User (int id, String name){
+    public User (String id, String name){
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

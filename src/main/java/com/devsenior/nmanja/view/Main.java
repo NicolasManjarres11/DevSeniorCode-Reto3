@@ -1,4 +1,4 @@
-package com.devsenior.nmanja;
+package com.devsenior.nmanja.view;
 
 public class Main {
     public static void main(String[] args) {
