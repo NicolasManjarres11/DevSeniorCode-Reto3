@@ -2,8 +2,8 @@ package com.devsenior.nmanja.model;
 
 public class User {
 
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
 
     public User (String id, String name){
         this.id = id;

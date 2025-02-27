@@ -2,15 +2,16 @@ package com.devsenior.nmanja.model;
 
 public class Book {
 
-    private String id;
-    private String title;
-    private String author;
+    private final String id;
+    private final String title;
+    private final String author;
     private boolean isBorrowed;
 
     public Book(String id, String title, String author) {
         this.id = id;
         this.title = title;
         this.author = author;
+        isBorrowed = false;
     }
 
     public String getId() {
@@ -20,6 +21,7 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
 
     public String getAuthor() {
         return author;
