@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -20,6 +21,20 @@ public class LibraryServiceTest {
         libraryService = new LibraryService(bookRepository, loanRepository);
     }
 
+    @Test
+
+    void testAddBook() {
+
+        var id = "1";
+        var title = "Libro 1";
+        var author = "Autor 1";
+
+        libraryService.addBook(id, title, author);
+        
+    }
+
     
+
+
 
 }
