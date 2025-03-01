@@ -43,8 +43,21 @@ public class LibraryService {
     }
 
     public void addUser(String id, String name){
+
+        if(users.stream().anyMatch(u -> u.getId().equals(id))){ //Se valida si el id ya existe dentro de la lista de usuarios
+            System.out.println("Ya existe un usuario con el id: "+ id);
+            return;
+        }
+
         users.add(new User(id, name));
     }
+
+    
+    //Getter para obtener usuarios
+    public List<User> getUsers() {
+        return users;
+    }
+
 
     public void borrowBook(String userId, String bookId){
 
