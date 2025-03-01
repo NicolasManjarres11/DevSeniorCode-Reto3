@@ -32,11 +32,13 @@ public class LibraryService {
 
     public Book getBookById(String id) throws BookNotFoundException{
 
-        if(bookRepository.findById(id) == null){
-            throw new BookNotFoundException("Libro no encontrado");
+        Book book = bookRepository.findById(id); //Se crea variable para llamar una sola vez a la funcion
+
+        if(book == null){
+            throw new BookNotFoundException("No se encontró el libro con el siguiente Id: " + id);
         }
 
-        return bookRepository.findById(id);
+        return book;
 
     }
 
