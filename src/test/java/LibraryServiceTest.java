@@ -92,19 +92,28 @@ public class LibraryServiceTest {
 
     void addUser(){
 
+        
+        var users = libraryService.getUsers();
+
         //Se llama al metodo para agregar un usuario
 
         libraryService.addUser("125403", "Nicolas Manjarres");
 
         //Se valida si se agregó un usuario a la lista
 
-        assertEquals(1, libraryService.getUsers().size()); 
+        assertEquals(1, users.size()); 
 
         //Se valida si el nombre  es correcto
 
-        assertEquals("Nicolas Manjarres", libraryService.getUsers().get(0).getName()); 
+        assertEquals("Nicolas Manjarres", users.get(0).getName()); 
+
+        //Se revisa que no sea nulo
+
+        assertNotNull(users);
 
     }
+
+    
 
 
 
