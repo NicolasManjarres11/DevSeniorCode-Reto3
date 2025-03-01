@@ -1,3 +1,4 @@
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -18,14 +19,16 @@ import com.devsenior.nmanja.model.Book;
 
 public class LibraryServiceTest {
 
-    @Mock private BookRepository bookRepository; //
-    @Mock private LoanRepository loanRepository; //
+    @Mock
+    private BookRepository bookRepository; //
+    @Mock
+    private LoanRepository loanRepository; //
 
     private LibraryService libraryService;
 
     @BeforeEach
 
-    public void setup(){
+    public void setup() {
         MockitoAnnotations.openMocks(this); //Se instancia los mocks inicializados
         libraryService = new LibraryService(bookRepository, loanRepository);
     }
@@ -38,30 +41,25 @@ public class LibraryServiceTest {
         var title = "Libro 1";
         var author = "Autor 1";
 
-        
-
         libraryService.addBook(id, title, author);
 
-        verify(bookRepository).saveBook(any(Book.class)); //Se verifica que se haya llamado al metodo y que si agrega un objeto de tipo libro
+        //Se verifica que se haya llamado al metodo y que si agrega un objeto de tipo libro
 
-        
+        verify(bookRepository).saveBook(any(Book.class)); 
 
-        
     }
-
 
     @Test
 
     void testGetBookById() {
 
-        var mockBook = new Book("111","El principito","Antoine de Saint-Exupery");
+        var mockBook = new Book("111", "El principito", "Antoine de Saint-Exupery");
 
         Mockito.when(bookRepository.findById("111")).thenReturn(mockBook); //Se mockea el metodo
-        
 
         Book book = libraryService.getBookById("111"); //Se llama al metodo
 
-        assertNotNull(book,"No se encontró el libro");
+        assertNotNull(book, "No se encontró el libro");
 
         assertEquals(mockBook, book);
         assertEquals("111", book.getId());
@@ -74,23 +72,47 @@ public class LibraryServiceTest {
 
     void testGetBookByIdWhenBookNotFound() {
 
-        Mockito.when(bookRepository.findById("123")).thenReturn(null); //Se mockea el metodo, para simular un libro no existente
+        //Se mockea el metodo, para simular un libro no existente
+
+        Mockito.when(bookRepository.findById("123")).thenReturn(null); 
 
         //Se agrega expresion lambda supplier
         //Se guarda en variable el valor retornado por el metodo
-
-
         var exception = assertThrows(BookNotFoundException.class, () -> libraryService.getBookById("123"));
-        
 
         //Se valida si el libro es nulo
-         
         assertNull(bookRepository.findById("123"));
 
         //Se valida si el mensaje es el correcto
-        assertEquals("No se encontró el libro con el siguiente Id: 123", exception.getMessage()); 
+        assertEquals("No se encontró el libro con el siguiente Id: 123", exception.getMessage());
 
     }
+
+    @Test
+
+    void addUser(){
+
+        
+        var users = libraryService.getUsers();
+
+        //Se llama al metodo para agregar un usuario
+
+        libraryService.addUser("125403", "Nicolas Manjarres");
+
+        //Se valida si se agregó un usuario a la lista
+
+        assertEquals(1, users.size()); 
+
+        //Se valida si el nombre  es correcto
+
+        assertEquals("Nicolas Manjarres", users.get(0).getName()); 
+
+        //Se revisa que no sea nulo
+
+        assertNotNull(users);
+
+    }
+
 
 
 
