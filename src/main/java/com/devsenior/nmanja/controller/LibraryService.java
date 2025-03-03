@@ -59,28 +59,48 @@ public class LibraryService {
     }
 
 
-    public void borrowBook(String userId, String bookId){
+    public void borrowBook(String userId, String bookId) {
+    try {
+        // Buscar usuario por ID
+        User user = users.stream()
+                        .filter(u -> u.getId().equals(userId))
+                        .findFirst()
+                        .orElseThrow(() -> new UserNotFounfException("No se encontró el usuario con el siguiente Id: " + userId));
 
-        for(User user : users){
+        // Buscar libro por ID
+        Book book = bookRepository.findById(bookId);
 
-            if(user.getId().equals(userId)){
-                var book = bookRepository.findById(bookId);
-                loanRepository.saveLoan(new Loan(user, book));
-                book.setBorrowed(true);
-            } else {
-                throw new UserNotFounfException("No se encontró el usuario con el siguiente Id: " + userId);
-            }
+        if (book == null) {
+            throw new BookNotFoundException("No se encontró el libro con el siguiente Id: " + bookId);
         }
 
-    }
+        // Verificar si el libro ya está prestado
+        if (book.isBorrowed()) {
+            throw new IllegalStateException("El libro ya ha sido prestado");
+        }
+
+        // Registrar préstamo
+        loanRepository.saveLoan(new Loan(user, book));
+        book.setBorrowed(true);
+        System.out.println("Préstamo realizado con éxito.");
+
+        //Excepciones
+
+    } catch (UserNotFounfException | BookNotFoundException e) {
+        System.err.println("Error: " + e.getMessage());
+    } 
+}
+
 
     public Loan getLoanByUserId(String userid){
 
-        if(loanRepository.findById(userid) == null){
+        Loan loan = loanRepository.findById(userid);
+
+        if(loan == null){
             throw new UserNotFounfException("No se encontró el usuario con el siguiente Id: " + userid);
         }
 
-        return loanRepository.findById(userid);
+        return loan;
     }
         
         
